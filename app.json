@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "sdkVersion": "15.0.0",
+    "slug": "strapsocialapp",
+    "icon": "./images/icon.png",
+    "slug":"strapsocialapp",
+    "loading": {
+      "hideExponentText": true,
+      "icon": "./images/loading.png",
+      "backgroundImage": "./images/launchscreen.png"
+    },
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "packagerOpts": {
+      "assetExts": [
+        "ttf"
+      ]
+    },
+    "ios": {
+     "bundleIdentifier": "io.market.nativebase.geekyants.socialapp"
+   },
+   "android": {
+     "package": "io.market.nativebase.geekyants.socialapp"
+   },
+   "androidStatusBarColor": "#2874F0",
+   "androidStatusBar": {
+    "barStyle": "dark-content",
+    "backgroundColor": "#2874F0"
+    }
+  }
+}
