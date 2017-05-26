@@ -76,9 +76,9 @@
     hoist-non-react-statics "^1.2.0"
     lodash "^4.15.0"
 
-"@shoutem/theme@git+https://github.com/GeekyAnts/theme.git#caching":
+"@shoutem/theme@https://github.com/GeekyAnts/theme#caching":
   version "0.8.8"
-  resolved "git+https://github.com/GeekyAnts/theme.git#7c8d0ab19eb452c8c465bbd8e27f8cdc32fddba5"
+  resolved "https://github.com/GeekyAnts/theme#23ce8703cbebe948cb507a12e462242fac9da497"
   dependencies:
     hoist-non-react-statics "^1.0.5"
     lodash "^4.10.1"
@@ -5342,6 +5342,10 @@ raw-body@~2.2.0:
     iconv-lite "0.4.15"
     unpipe "1.0.0"
 
+react-addons-pure-render-mixin@15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.0.2.tgz#b7731c5cc7f21214d68a78c84f40df3aefdf462f"
+
 react-addons-pure-render-mixin@^15.0.2:
   version "15.5.0"
   resolved "https://registry.yarnpkg.com/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.5.0.tgz#5cb33ed20b9a4c34e9afa4d6f5583b587fdadbb7"
@@ -5441,7 +5445,7 @@ react-native-lightbox@^0.6.0:
   dependencies:
     react-timer-mixin "^0.13.3"
 
-"react-native-lightbox@github:oblador/react-native-lightbox#c84a8543d4511fe6a44c3d7820747c9c1bddd875":
+react-native-lightbox@oblador/react-native-lightbox#c84a8543d4511fe6a44c3d7820747c9c1bddd875:
   version "0.6.0"
   resolved "https://codeload.github.com/oblador/react-native-lightbox/tar.gz/c84a8543d4511fe6a44c3d7820747c9c1bddd875"
   dependencies:
@@ -5463,10 +5467,11 @@ react-native-parsed-text@0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.16.tgz#788f6a51c3e2c224ad89101cc3d63f5993d37747"
 
-react-native-router-flux@^3.38.0:
-  version "3.38.0"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-3.38.0.tgz#f5f8ec2875b46f96f61006ff502d0d80268e6ce2"
+react-native-router-flux@3.37.0:
+  version "3.37.0"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-3.37.0.tgz#18e8fd3e1e6dbdc4d8340cd47313c28bb9bb1caf"
   dependencies:
+    react-addons-pure-render-mixin "15.0.2"
     react-native-experimental-navigation "0.26.x"
     react-native-tabs "^1.0.9"
     react-static-container "1.0.1"

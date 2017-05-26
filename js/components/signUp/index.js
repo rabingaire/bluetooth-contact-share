@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, Text, Item, Input, Button, View, ListItem, Radio } from 'native-base';
+import { Container, Content, Text, Item, Input, Button, View } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 
 import styles from './styles';
@@ -18,8 +18,8 @@ class SignUp extends Component {
     this.state = {
       firstname: '',
       surname: '',
-      mobileoremail: '',
-      reentermobileoremail: '',
+      email: '',
+      reenteremail: '',
       password: '',
       tab: 'homeContent',
     };
@@ -50,7 +50,7 @@ class SignUp extends Component {
               <Col style={{ paddingLeft: 10 }}>
                 <Item borderType="underline" style={styles.inputGrp}>
                   <Input
-                    placeholder="Surname"
+                    placeholder="Last Name"
                     placeholderTextColor={'#fff'}
                     onChangeText={surname => this.setState({ surname })}
                     style={styles.input}
@@ -60,17 +60,17 @@ class SignUp extends Component {
             </Grid>
             <Item borderType="underline" style={styles.inputGrp}>
               <Input
-                placeholder="Mobile number or email address"
+                placeholder="Email address"
                 placeholderTextColor={'#fff'}
-                onChangeText={mobileoremail => this.setState({ mobileoremail })}
+                onChangeText={email => this.setState({ email })}
                 style={styles.input}
               />
             </Item>
             <Item borderType="underline" style={styles.inputGrp}>
               <Input
-                placeholder="Re-enter mobile number or email address"
+                placeholder="Re-enter email address"
                 placeholderTextColor={'#fff'}
-                onChangeText={reentermobileoremail => this.setState({ reentermobileoremail })}
+                onChangeText={reenteremail => this.setState({ reenteremail })}
                 style={styles.input}
               />
             </Item>
@@ -83,29 +83,9 @@ class SignUp extends Component {
                 style={styles.input}
               />
             </Item>
-            <Grid style={{ marginVertical: 5 }}>
-              <Col>
-                <ListItem
-                  style={{ padding: 0, paddingRight: 15, marginLeft: 0, borderBottomWidth: 0 }}
-                >
-                  <Radio selected={false} />
-                  <Text style={{ marginLeft: 5 }}>Female</Text>
-                </ListItem>
-              </Col>
-              <Col>
-                <ListItem
-                  style={{ padding: 0, paddingLeft: 15, marginLeft: 0, borderBottomWidth: 0 }}
-                >
-                  <Radio selected />
-                  <Text style={{ marginLeft: 5 }}>Male</Text>
-                </ListItem>
-              </Col>
-            </Grid>
             <Button
               block
               style={styles.createBtn}
-              onPress={() => { Actions.home({ username: this.state.username, password: this.state.password });
-                this.props.selectTab('homeContent'); }}
             >
               <Text style={{ lineHeight: 16, fontWeight: 'bold', color: 'rgba(255,255,255,0.5)' }}>CREATE</Text>
             </Button>
