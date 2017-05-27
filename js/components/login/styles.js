@@ -71,4 +71,10 @@ export default {
     fontSize: 14,
     lineHeight: 20,
   },
+  errorTypeStyle: {
+    fontSize: 14,
+    alignSelf: 'center',
+    color: 'red',
+    margin: 20,
+  },
 };
