@@ -32,6 +32,7 @@ class SignUp extends Component {
 
     this.handleOnPress = this.handleOnPress.bind(this);
     this.isFormInValid = this.isFormInValid.bind(this);
+    this.isEmailValid = this.isEmailValid.bind(this);
     this.signUpSucessfull = this.signUpSucessfull.bind(this);
     this.signUpUnSucessfull = this.signUpUnSucessfull.bind(this);
     this.renderButton = this.renderButton.bind(this);
@@ -41,6 +42,8 @@ class SignUp extends Component {
     const { email, reenteremail } = this.state;
     if (this.isFormInValid()) {
       this.setState({ error: 'Forms cannot be empty!' });
+    } else if (!this.isEmailValid()) {
+      this.setState({ error: 'Email structure not valid' });
     } else if (email === reenteremail) {
       this.setState({ error: '', loading: true });
       this.callRegistrationApi();
@@ -52,6 +55,11 @@ class SignUp extends Component {
   isFormInValid() {
     const { email, reenteremail, password, firstname, lastname } = this.state;
     return (email === '' || reenteremail === '' || password === '' || firstname === '' || lastname === '');
+  }
+
+  isEmailValid() {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return (re.test(this.state.email) && re.test(this.state.reenteremail));
   }
 
   callRegistrationApi() {
