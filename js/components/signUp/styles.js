@@ -72,7 +72,7 @@ export default {
     shadowOpacity: 0,
   },
   errorTypeStyle: {
-    fontSize: 20,
+    fontSize: 14,
     alignSelf: 'center',
     color: 'red',
   },

@@ -58,7 +58,7 @@ class SignUp extends Component {
   }
 
   isEmailValid() {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return (re.test(this.state.email) && re.test(this.state.reenteremail));
   }
 
@@ -108,7 +108,7 @@ class SignUp extends Component {
           block
           style={styles.createBtn}
         >
-          <Spinner />
+          <Spinner color="#fff" />
         </Button>
       );
     }
