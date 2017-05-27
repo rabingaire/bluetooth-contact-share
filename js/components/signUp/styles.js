@@ -71,4 +71,9 @@ export default {
     shadowRadius: 0,
     shadowOpacity: 0,
   },
+  errorTypeStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red',
+  },
 };

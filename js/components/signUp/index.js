@@ -17,17 +17,60 @@ class SignUp extends Component {
     super(props);
     this.state = {
       firstname: '',
-      surname: '',
+      lastname: '',
       email: '',
       reenteremail: '',
       password: '',
       tab: 'homeContent',
+      error: '',
+      loading: false,
     };
     this.constructor.childContextTypes = {
       theme: React.PropTypes.object,
       selectTab: React.PropTypes.func,
       tabState: React.PropTypes.string,
     };
+
+    this.handleOnPress = this.handleOnPress.bind(this);
+    this.isFormInValid = this.isFormInValid.bind(this);
+  }
+
+  handleOnPress() {
+    const { email, reenteremail } = this.state;
+    if (this.isFormInValid()) {
+      this.setState({ error: 'Forms cannot be empty!' });
+    } else if (email === reenteremail) {
+      this.setState({ error: '', loading: true });
+      this.callRegistrationApi();
+    } else {
+      this.setState({ error: 'Email does not match', loading: false });
+    }
+  }
+
+  isFormInValid() {
+    const { email, reenteremail, password, firstname, lastname } = this.state;
+    return (email === '' && reenteremail === '' && password === '' && firstname === '' && lastname === '');
+  }
+
+  callRegistrationApi() {
+    const { email, password, firstname, lastname } = this.state;
+    fetch('http://bch-app-beta.azurewebsites.net/api/Registrations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        firstName: firstname,
+        lastName: lastname,
+      }),
+    })
+    .then(response => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+    })
+    .done();
   }
 
   render() {
@@ -52,7 +95,7 @@ class SignUp extends Component {
                   <Input
                     placeholder="Last Name"
                     placeholderTextColor={'#fff'}
-                    onChangeText={surname => this.setState({ surname })}
+                    onChangeText={lastname => this.setState({ lastname })}
                     style={styles.input}
                   />
                 </Item>
@@ -83,9 +126,13 @@ class SignUp extends Component {
                 style={styles.input}
               />
             </Item>
+            <Text style={styles.errorTypeStyle}>
+              {this.state.error}
+            </Text>
             <Button
               block
               style={styles.createBtn}
+              onPress={this.handleOnPress}
             >
               <Text style={{ lineHeight: 16, fontWeight: 'bold', color: 'rgba(255,255,255,0.5)' }}>CREATE</Text>
             </Button>
