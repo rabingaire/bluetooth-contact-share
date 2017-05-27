@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, Text, Item, Input, Button, View } from 'native-base';
+import { Container, Content, Text, Item, Input, Button, View, Spinner } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 
 import styles from './styles';
@@ -11,7 +11,6 @@ import { selectTab } from '../../actions/drawer';
 const logo = require('../../../images/logo.png');
 
 class SignUp extends Component {
-
 
   constructor(props) {
     super(props);
@@ -33,6 +32,9 @@ class SignUp extends Component {
 
     this.handleOnPress = this.handleOnPress.bind(this);
     this.isFormInValid = this.isFormInValid.bind(this);
+    this.signUpSucessfull = this.signUpSucessfull.bind(this);
+    this.signUpUnSucessfull = this.signUpUnSucessfull.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   handleOnPress() {
@@ -49,7 +51,7 @@ class SignUp extends Component {
 
   isFormInValid() {
     const { email, reenteremail, password, firstname, lastname } = this.state;
-    return (email === '' && reenteremail === '' && password === '' && firstname === '' && lastname === '');
+    return (email === '' || reenteremail === '' || password === '' || firstname === '' || lastname === '');
   }
 
   callRegistrationApi() {
@@ -68,9 +70,49 @@ class SignUp extends Component {
     })
     .then(response => response.json())
     .then((responseData) => {
-      console.log(responseData);
+      if (responseData.isActive === true) {
+        this.signUpSucessfull(responseData);
+      } else {
+        this.signUpUnSucessfull(responseData);
+      }
     })
     .done();
+  }
+
+  signUpSucessfull(responseData) {
+    this.setState({ loading: false });
+    Actions.home({
+      firstname: responseData.firstName,
+      lastname: responseData.lastName,
+      email: responseData.email,
+    });
+  }
+
+  signUpUnSucessfull(responseData) {
+    const error = responseData.errorUserMessage;
+    this.setState({ error, loading: false });
+  }
+
+  renderButton() {
+    if (this.state.loading) {
+      return (
+        <Button
+          block
+          style={styles.createBtn}
+        >
+          <Spinner />
+        </Button>
+      );
+    }
+    return (
+      <Button
+        block
+        style={styles.createBtn}
+        onPress={this.handleOnPress}
+      >
+        <Text style={{ lineHeight: 16, fontWeight: 'bold', color: 'rgba(255,255,255,0.5)' }}>CREATE</Text>
+      </Button>
+    );
   }
 
   render() {
@@ -129,13 +171,7 @@ class SignUp extends Component {
             <Text style={styles.errorTypeStyle}>
               {this.state.error}
             </Text>
-            <Button
-              block
-              style={styles.createBtn}
-              onPress={this.handleOnPress}
-            >
-              <Text style={{ lineHeight: 16, fontWeight: 'bold', color: 'rgba(255,255,255,0.5)' }}>CREATE</Text>
-            </Button>
+            { this.renderButton() }
             <Button
               transparent
               onPress={() => Actions.pop()}
