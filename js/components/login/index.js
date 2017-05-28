@@ -6,10 +6,10 @@ import { Container, Content, Text, Item, Input, Button, View, Spinner } from 'na
 
 import styles from './styles';
 import { selectTab } from '../../actions/drawer';
+import { HTTP, setItem } from '../helper/common';
 
 const logo = require('../../../images/logo.png');
 
-import { HTTP, setItem } from '../helper/common';
 
 class Login extends Component {
 

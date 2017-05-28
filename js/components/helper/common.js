@@ -22,7 +22,7 @@ export async function HTTP(uri, method, payload) {
 }
 
 export async function setItem(key, data) {
-  const response = await AsyncStorage.setItem(key, data);
+  const response = await AsyncStorage.setItem(key,JSON.stringify(data));
   return response;
 }
 
