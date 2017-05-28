@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Image, Platform } from 'react-native';
+import { Image, Platform, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { Container, Content, Text, Item, Input, Button, View, Spinner } from 'native-base';
+import { bindActionCreators } from 'redux';
 
 import styles from './styles';
 import { selectTab } from '../../actions/drawer';
+import { addUser }  from '../../actions/userActionCreator';
+import { HTTP, setItem } from '../helper/common';
 
 const logo = require('../../../images/logo.png');
 
-import { HTTP, setItem } from '../helper/common';
 
 class Login extends Component {
 
@@ -19,8 +21,9 @@ class Login extends Component {
       email: '',
       password: '',
       tab: 'homeContent',
-      error: '',
+      error: null,
       loading: false,
+      logic: true
     };
     this.constructor.childContextTypes = {
       theme: React.PropTypes.object,
@@ -36,13 +39,24 @@ class Login extends Component {
     this.renderButton = this.renderButton.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.user) {
+      Actions.home({
+        firstname: this.props.user.firstName,
+        lastname: this.props.user.lastName,
+        email: this.props.user.email,
+      })
+    }
+    this.setState({logic: false});
+  }
+
   handleOnPress() {
     if (this.isFormInValid()) {
-      this.setState({ error: 'Forms cannot be empty!' });
+      this.setState({ error: 'Form cannot be empty!' });
     } else if (!this.isEmailValid()) {
-      this.setState({ error: 'Email structure not valid' });
+      this.setState({ error: 'Invalid email' });
     } else {
-      this.setState({ error: '', loading: true });
+      this.setState({ error: null, loading: true });
       this.callRegistrationApi();
     }
   }
@@ -65,7 +79,7 @@ class Login extends Component {
     .then(response => response.json())
     .then((responseData) => {
       if (responseData.isActive === true) {
-        setItem('user', responseData);
+        this.props.dispatch(addUser(responseData));
         this.signUpSucessfull(responseData);
       } else {
         this.signUpUnSucessfull();
@@ -113,46 +127,53 @@ class Login extends Component {
   render() {
     return (
       <Container style={styles.background}>
-        <Content>
+        {this.state.logic ?
+          <Content>
           <Image source={logo} style={Platform.OS === 'android' ? styles.aShadow : styles.iosShadow} />
           <View style={{ padding: 40 }}>
-            <Item borderType="underline" style={styles.inputGrp}>
-              <Input
-                placeholder="Email"
-                placeholderTextColor={'#fff'}
-                autoCapitalize="none"
-                onChangeText={email => this.setState({ email })}
-                style={styles.input}
-              />
-            </Item>
-            <Item borderType="underline" style={styles.inputGrp}>
-              <Input
-                placeholder="Password"
-                placeholderTextColor={'#fff'}
-                secureTextEntry
-                autoCapitalize="none"
-                onChangeText={password => this.setState({ password })}
-                style={styles.input}
-              />
-            </Item>
+          <Item borderType="underline" style={styles.inputGrp}>
+          <Input
+          placeholder="Email"
+          placeholderTextColor={'#fff'}
+          autoCapitalize="none"
+          onChangeText={email => this.setState({ email })}
+          style={styles.input}
+          />
+          </Item>
+          <Item borderType="underline" style={styles.inputGrp}>
+          <Input
+          placeholder="Password"
+          placeholderTextColor={'#fff'}
+          secureTextEntry
+          autoCapitalize="none"
+          onChangeText={password => this.setState({ password })}
+          style={styles.input}
+          />
+          </Item>
+          {this.state.error &&
+            <View>
             <Text style={styles.errorTypeStyle}>
-              {this.state.error}
+            {this.state.error}
             </Text>
-            { this.renderButton() }
-            <Button transparent style={{ alignSelf: 'center' }}>
-              <Text style={styles.forgotPassword}>
-                      Forgot Password?
-                  </Text>
-            </Button>
-            <Button
-              block bordered
-              style={styles.createBtn}
-              onPress={() => Actions.signUp()}
-            >
-              <Text style={styles.createBtnTxt}>CREATE NEW ACCOUNT</Text>
-            </Button>
+            </View>
+          }
+          { this.renderButton() }
+          <Button transparent style={{ alignSelf: 'center' }}>
+          <Text style={styles.forgotPassword}>
+          Forgot Password?
+          </Text>
+          </Button>
+          <Button
+          block bordered
+          style={styles.createBtn}
+          onPress={() => Actions.signUp()}
+          >
+          <Text style={styles.createBtnTxt}>CREATE NEW ACCOUNT</Text>
+          </Button>
           </View>
-        </Content>
+          </Content>
+          : <ActivityIndicator></ActivityIndicator>
+        }
       </Container>
     );
   }
@@ -160,11 +181,16 @@ class Login extends Component {
 
 function bindAction(dispatch) {
   return {
-    selectTab: newTab => dispatch(selectTab(newTab)),
+    selectTab: newTab => dispatch(selectTab(newTab))
   };
 }
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+};
 const mapStateToProps = state => ({
   tabState: state.drawer.tabState,
+  user: state.user
 });
 
 export default connect(mapStateToProps, bindAction)(Login);

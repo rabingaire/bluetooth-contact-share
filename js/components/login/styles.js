@@ -75,6 +75,6 @@ export default {
     fontSize: 14,
     alignSelf: 'center',
     color: 'red',
-    margin: 20,
+    margin: 10
   },
 };
