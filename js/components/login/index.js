@@ -9,6 +9,8 @@ import { selectTab } from '../../actions/drawer';
 
 const logo = require('../../../images/logo.png');
 
+import { HTTP, setItem } from '../helper/common';
+
 class Login extends Component {
 
   constructor(props) {
@@ -57,16 +59,13 @@ class Login extends Component {
 
   callRegistrationApi() {
     const { email, password } = this.state;
-    const url = `http://bch-app-beta.azurewebsites.net/api/Registrations?email=${email}&password=${password}&tguid=0`;
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const uri = `api/Registrations?email=${email}&password=${password}&tguid=0`;
+
+    HTTP(uri, 'GET')
     .then(response => response.json())
     .then((responseData) => {
       if (responseData.isActive === true) {
+        setItem('user', responseData);
         this.signUpSucessfull(responseData);
       } else {
         this.signUpUnSucessfull();
@@ -121,6 +120,7 @@ class Login extends Component {
               <Input
                 placeholder="Email"
                 placeholderTextColor={'#fff'}
+                autoCapitalize="none"
                 onChangeText={email => this.setState({ email })}
                 style={styles.input}
               />
@@ -130,6 +130,7 @@ class Login extends Component {
                 placeholder="Password"
                 placeholderTextColor={'#fff'}
                 secureTextEntry
+                autoCapitalize="none"
                 onChangeText={password => this.setState({ password })}
                 style={styles.input}
               />
