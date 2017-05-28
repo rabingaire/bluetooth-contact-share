@@ -7,6 +7,7 @@ import { Grid, Col } from 'react-native-easy-grid';
 
 import styles from './styles';
 import { selectTab } from '../../actions/drawer';
+import { HTTP, setItem } from '../helper/common';
 
 const logo = require('../../../images/logo.png');
 
@@ -64,21 +65,19 @@ class SignUp extends Component {
 
   callRegistrationApi() {
     const { email, password, firstname, lastname } = this.state;
-    fetch('http://bch-app-beta.azurewebsites.net/api/Registrations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        firstName: firstname,
-        lastName: lastname,
-      }),
-    })
+    const uri = 'api/Registrations';
+    const payload = {
+      email,
+      password,
+      firstName: firstname,
+      lastName: lastname,
+    };
+
+    HTTP(uri, 'POST', payload)
     .then(response => response.json())
     .then((responseData) => {
       if (responseData.isActive === true) {
+        setItem('user', responseData);
         this.signUpSucessfull(responseData);
       } else {
         this.signUpUnSucessfull(responseData);
