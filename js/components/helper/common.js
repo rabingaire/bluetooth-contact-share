@@ -22,11 +22,12 @@ export async function HTTP(uri, method, payload) {
 }
 
 export async function setItem(key, data) {
-  const response = await AsyncStorage.setItem(key, data);
+  const response = await AsyncStorage.setItem(key, JSON.stringify(data));
   return response;
 }
 
 export async function getItem(key) {
-  const response = await AsyncStorage.getItem(key);
+  const data = await AsyncStorage.getItem(key);
+  const response = JSON.parse(data);
   return response;
 }
