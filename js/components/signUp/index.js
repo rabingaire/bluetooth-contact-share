@@ -134,6 +134,7 @@ class SignUp extends Component {
                   <Input
                     placeholder="First Name"
                     placeholderTextColor={'#fff'}
+                    autoCapitalize="none"
                     onChangeText={firstname => this.setState({ firstname })}
                     style={styles.input}
                   />
@@ -143,6 +144,7 @@ class SignUp extends Component {
                 <Item borderType="underline" style={styles.inputGrp}>
                   <Input
                     placeholder="Last Name"
+                    autoCapitalize="none"
                     placeholderTextColor={'#fff'}
                     onChangeText={lastname => this.setState({ lastname })}
                     style={styles.input}
@@ -154,6 +156,7 @@ class SignUp extends Component {
               <Input
                 placeholder="Email address"
                 placeholderTextColor={'#fff'}
+                autoCapitalize="none"
                 onChangeText={email => this.setState({ email })}
                 style={styles.input}
               />
@@ -162,6 +165,7 @@ class SignUp extends Component {
               <Input
                 placeholder="Re-enter email address"
                 placeholderTextColor={'#fff'}
+                autoCapitalize="none"
                 onChangeText={reenteremail => this.setState({ reenteremail })}
                 style={styles.input}
               />
@@ -171,6 +175,7 @@ class SignUp extends Component {
                 placeholder="New password"
                 placeholderTextColor={'#fff'}
                 secureTextEntry
+                autoCapitalize="none"
                 onChangeText={password => this.setState({ password })}
                 style={styles.input}
               />

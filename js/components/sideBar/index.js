@@ -46,7 +46,7 @@ class SideBar extends Component {
     return (
       <Container>
         <Content style={styles.drawerContent}>
-          <View style={styles.header} >
+          {/*<View style={styles.header} >
             <View style={styles.rowHeader}>
               <Item style={styles.sidebarSearch}>
                 <Icon name="search" style={styles.searchIcon} />
@@ -56,7 +56,7 @@ class SideBar extends Component {
                 <Image source={settingsDarkImg} style={styles.settingsBtn} />
               </Button>
             </View>
-          </View>
+          </View>*/}
           <List
             dataArray={userData}
             renderRow={userDataRow =>
@@ -79,12 +79,12 @@ class SideBar extends Component {
               </ListItem>
             }
           />
-          <View style={styles.favHead}>
+          {/*<View style={styles.favHead}>
             <Text style={styles.favText}>FAVOURITES</Text>
             <Text style={styles.favText}>EDIT</Text>
-          </View>
-          <List foregroundColor={'white'} >
-            <ListItem
+          </View>*/}
+          {/*<List foregroundColor={'white'} >*/}
+            {/*<ListItem
               button
               thumbnail
               style={styles.links}
@@ -98,8 +98,8 @@ class SideBar extends Component {
               <Right style={{ borderBottomWidth: 0, paddingLeft: 5 }}>
                 <Icon name="phone-portrait" style={{ color: '#64676C' }} />
               </Right>
-            </ListItem>
-            <ListItem
+            </ListItem>*/}
+            {/*<ListItem
               button
               thumbnail
               style={styles.links}
@@ -113,8 +113,8 @@ class SideBar extends Component {
               <Right style={{ borderBottomWidth: 0, paddingLeft: 5 }}>
                 <View style={styles.online} />
               </Right>
-            </ListItem>
-            <ListItem
+            </ListItem>*/}
+            {/*<ListItem
               button
               thumbnail
               style={styles.links}
@@ -128,8 +128,8 @@ class SideBar extends Component {
               <Right style={{ borderBottomWidth: 0, paddingLeft: 5 }}>
                 <View style={styles.online} />
               </Right>
-            </ListItem>
-            <ListItem
+            </ListItem>*/}
+            {/*<ListItem
               button
               thumbnail
               style={styles.links}
@@ -174,8 +174,8 @@ class SideBar extends Component {
                 <View style={styles.online} />
               </Right>
             </ListItem>
-          </List>
-          <View style={styles.favHead}>
+          </List>*/}
+          {/*<View style={styles.favHead}>
             <Text style={styles.favText}>MORE FRIENDS (27)</Text>
           </View>
           <List foregroundColor={'white'} >
@@ -269,7 +269,7 @@ class SideBar extends Component {
                 <View style={styles.online} />
               </Right>
             </ListItem>
-          </List>
+          </List>*/}
           <View style={styles.favHead}>
             <Text style={styles.favText}>OPTIONS</Text>
           </View>

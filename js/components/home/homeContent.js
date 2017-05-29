@@ -1,16 +1,11 @@
 
 import React, { Component } from 'react';
-import { Image, View, TouchableOpacity, Platform, ListView } from 'react-native';
+import { Image, View, TouchableOpacity, Platform, ListView, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content,
-  Text, Thumbnail,
-  Card, CardItem, ListItem,
-  Left,
-  Right,
-  Body,
-  Footer,
- } from 'native-base';
+import { Container, Header, Content, Left, Right, Body, Button, Icon, Thumbnail, Title, List, ListItem, Footer } from 'native-base';
+import { HTTP } from '../helper/common';
+
 
 import { openDrawer } from '../../actions/drawer';
 
@@ -40,14 +35,18 @@ class HomeContent extends Component {  // eslint-disable-line
     this.state = {
       dataSource: ds.cloneWithRows(data),
     };
+    console.log('this user props', this.props.user);
   }
 
+  componentWillMount() {
+
+  }
 
   render() {
     return (
       <Container>
         <Content style={styles.content}>
-          <View style={styles.detailsBlock}>
+          {/*<View style={styles.detailsBlock}>
             <View style={styles.whatsOnMind}>
               <Thumbnail size={60} square source={profileImg} />
               <TouchableOpacity onPress={() => Actions.updatePost()}>
@@ -68,8 +67,8 @@ class HomeContent extends Component {  // eslint-disable-line
                 <Text style={styles.navLinkText}>Check In</Text>
               </TouchableOpacity>
             </View>
-          </View>
-          <View style={styles.listViewBlock}>
+          </View>*/}
+          {/*<View style={styles.listViewBlock}>
             <ListView
               dataSource={this.state.dataSource}
               renderRow={dataRow =>
@@ -118,7 +117,40 @@ class HomeContent extends Component {  // eslint-disable-line
                 </ListItem>
                     }
             />
-          </View>
+          </View>*/}
+            {/*<Text style={styles.requestHead}>Your Contacts</Text>*/}
+            <View style={styles.requestContainer}>
+              <Text style={styles.whiteRequest}>Your Contacts</Text>
+            </View>
+            {/*<Text style={styles.requestHead}>PEOPLE YOU MAY KNOW</Text>*/}
+            <View style={styles.requestContainer}>
+              <List
+                dataArray={data}
+                renderRow={dataRow =>
+                  <ListItem>
+                    <View style={styles.requestContainerInner}>
+                      <Thumbnail square style={{ height: 66, width: 66 }} size={75} source={dataRow.thumbnail} />
+                      <View>
+                        <Text style={styles.name}>{dataRow.name}</Text>
+                        <Text style={styles.noOfMutualFriends}>{dataRow.friendsCount}</Text>
+                        <View style={styles.actionButtonsBlock}>
+                          <Button block style={styles.friendBtn1}>
+                            <Text style={{ color: '#fff' }}>
+                              Add Friend
+                            </Text>
+                          </Button>
+                          <Button block bordered style={styles.friendBtn}>
+                            <Text style={{ color: '#2874F0' }}>
+                              Remove
+                            </Text>
+                          </Button>
+                        </View>
+                      </View>
+                    </View>
+                  </ListItem>
+                }
+              />
+            </View>
         </Content>
         <Footer />
       </Container>
@@ -132,5 +164,10 @@ function bindAction(dispatch) {
   };
 }
 
+function mapStateToProps(state) {
+  return {
+    user:  state.user
+  };
+}
 
-export default connect(null, bindAction)(HomeContent);
+export default connect(mapStateToProps, bindAction)(HomeContent);
