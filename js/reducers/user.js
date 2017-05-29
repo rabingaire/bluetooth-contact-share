@@ -11,7 +11,6 @@ const defaultState = {
 };
 
 export default function (state:State = defaultState, action:Action): State {
-  console.log(action, 'action payload');
   switch (action.type) {
     case ADD_USER:
       return {

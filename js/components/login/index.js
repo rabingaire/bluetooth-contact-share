@@ -41,7 +41,6 @@ class Login extends Component {
 
   componentWillMount() {
     if (!this.props.user) {
-      alert('mm')
       Actions.home({
         firstname: this.props.user.firstName,
         lastname: this.props.user.lastName,
