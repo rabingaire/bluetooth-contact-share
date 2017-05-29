@@ -77,7 +77,7 @@ class Friends extends Component {  // eslint-disable-line
             <Title style={styles.header}>Profiles</Title>
           </Body>
           <Right>
-            <Button transparent onPress={() => Actions.addProfile()}>
+            <Button transparent onPress={() => this.props.selectTab('addProfile')}>
               <Icon style={styles.addBtn} name="add" />
             </Button>
           </Right>

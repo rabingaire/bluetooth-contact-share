@@ -10,7 +10,7 @@ import Friends from '../friends';
 import HomeContent from './homeContent';
 import Notifications from '../notifications';
 import Chat from '../chat';
-import Settings from '../settings';
+import AddProfile from '../addProfile';
 import { openDrawer, selectTab } from '../../actions/drawer';
 
 import styles from './styles';
@@ -44,8 +44,8 @@ class Home extends Component {  // eslint-disable-line
       case 'chat':
         tab = <Chat />;
         break;
-      case 'settings':
-        tab = <Settings />;
+      case 'addProfile':
+        tab = <AddProfile />;
         break;
       case 'nearbyFriends':
         tab = <NearbyFriends />;
@@ -55,7 +55,7 @@ class Home extends Component {  // eslint-disable-line
     }
     return (
       <Container style={{ flex: 1 }}>
-        {(!(this.props.tabState === 'friends') && !(this.props.tabState === 'nearbyFriends') && !(this.props.tabState === 'notifications') && !(this.props.tabState === 'chat') && !(this.props.tabState === 'settings')) &&
+        {(!(this.props.tabState === 'friends') && !(this.props.tabState === 'nearbyFriends') && !(this.props.tabState === 'notifications') && !(this.props.tabState === 'chat') && !(this.props.tabState === 'addProfile')) &&
           <Header searchBar>
             <Item style={{ borderRadius: 6, backgroundColor: '#293F68' }}>
               <Icon name="search" style={{ color: '#fff' }} />
