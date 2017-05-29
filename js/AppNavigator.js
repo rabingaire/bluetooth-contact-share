@@ -19,6 +19,7 @@ import UpdatePost from './components/updatePost/';
 import NearbyFriends from './components/nearbyFriends/';
 import BlankPage from './components/blankPage/';
 import SideBar from './components/sideBar';
+import AddProfile from './components/addProfile';
 import { statusBarColor } from './themes/base-theme';
 
 const statusBarClr = color('#3B5998').darken(0.3).hexString();
@@ -104,6 +105,7 @@ class AppNavigator extends Component {
             <Scene key="updatePost" component={UpdatePost} />
             <Scene key="nearbyFriends" component={NearbyFriends} />
             <Scene key="blankPage" component={BlankPage} />
+            <Scene key="addProfile" component={AddProfile} />
           </Scene>
         </RouterWithRedux>
 
