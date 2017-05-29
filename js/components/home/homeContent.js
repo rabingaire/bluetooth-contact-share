@@ -3,13 +3,10 @@ import React, { Component } from 'react';
 import { View, ListView, Text } from 'react-native';
 import { connect } from 'react-redux';
 // import { Actions } from 'react-native-router-flux';
-import { Container, Content, List, ListItem } from 'native-base';
-// import { HTTP } from '../helper/common';
-
-
+import { Container, Content, List, ListItem, Spinner } from 'native-base';
+import { HTTP } from '../helper/common';
 import { openDrawer } from '../../actions/drawer';
 
-import data from './data';
 import styles from './styles';
 
 
@@ -20,40 +17,72 @@ class HomeContent extends Component {  // eslint-disable-line
   }
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(data),
+      userid: null,
+      profileId: 0,
+      tguid: null,
+      contactsInfo: [],
+      loading: false,
+      message: null,
     };
-    console.log('this user props', this.props.user);
+
+    this.callContactsApi = this.callContactsApi.bind(this);
   }
 
   componentWillMount() {
+    const user = this.props.user;
+    this.setState({
+      loading: true,
+      tguid: user.tguid,
+      userid: user.userId,
+    });
+    this.callContactsApi();
+  }
 
+  callContactsApi() {
+    const { userid, profileId, tguid } = this.state;
+    const uri = `api/contacts?userid=${userid}&profileId=${profileId}&tguid=${tguid}`;
+
+    HTTP(uri, 'GET')
+    .then(response => response.json())
+    .then((responseData) => {
+      if (responseData.message === null) {
+        this.setState({ loading: false, contactsInfo: responseData });
+      } else {
+        this.setState({ loading: false, message: 'No contacts found' });
+      }
+    })
+    .done();
   }
 
   render() {
+    const contacts = this.state.contactsInfo.map(contact =>
+      <ListItem>
+        <View style={styles.requestContainerInner}>
+          <View>
+            <Text style={styles.name}>{contact.nickName}</Text>
+          </View>
+        </View>
+      </ListItem>
+    );
     return (
       <Container>
-        <Content style={styles.content}>
-          <View style={styles.requestContainer}>
-            <Text style={styles.whiteRequest}>Your Contacts</Text>
-          </View>
-          <View style={styles.requestContainer}>
-            <List
-              dataArray={data}
-              renderRow={dataRow =>
-                <ListItem>
-                  <View style={styles.requestContainerInner}>
-                    <View>
-                      <Text style={styles.name}>{dataRow.name}</Text>
-                      <Text style={styles.noOfMutualFriends}>{dataRow.friendsCount}</Text>
-                    </View>
-                  </View>
-                </ListItem>
+        { this.state.loading ?
+          <Spinner color="#3B5998" /> :
+          <Content style={styles.content}>
+            <View style={styles.requestContainer}>
+              <Text style={styles.whiteRequest}>Your Contacts</Text>
+            </View>
+            <View style={styles.requestContainer}>
+              { this.state.message === null ?
+                <List>
+                  {contacts}
+                </List> :
+                <Text style={styles.name}>{this.state.message}</Text>
               }
-            />
-          </View>
-        </Content>
+            </View>
+          </Content>
+        }
       </Container>
     );
   }

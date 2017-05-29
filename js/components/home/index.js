@@ -13,8 +13,6 @@ import Chat from '../chat';
 import Settings from '../settings';
 import { openDrawer, selectTab } from '../../actions/drawer';
 
-
-import data from './data';
 import styles from './styles';
 
 class Home extends Component {  // eslint-disable-line
@@ -26,10 +24,8 @@ class Home extends Component {  // eslint-disable-line
   }
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       tab: 'homeContent',
-      dataSource: ds.cloneWithRows(data),
     };
   }
 
