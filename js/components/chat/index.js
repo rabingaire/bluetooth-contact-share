@@ -13,9 +13,6 @@ import styles from './styles';
 const screenHeight = Dimensions.get('window').height;
 const gridHeight = (Platform.OS === 'ios') ? screenHeight - 119 : screenHeight - 135;
 
-const chatContactsImg = require('../../../images/chatcontacts.png');
-
-
 class Chat extends Component {  // eslint-disable-line
   static propTypes = {
     tabState: React.PropTypes.string,
@@ -197,7 +194,7 @@ class Chat extends Component {  // eslint-disable-line
           </Body>
           <Right>
             <Button transparent onPress={this.props.openDrawer}>
-              <Image source={chatContactsImg} style={{ resizeMode: 'contain', height: 30, width: 30 }} />
+              <Icon name="menu" style={{ color: '#fff' }} />
             </Button>
           </Right>
         </Header>

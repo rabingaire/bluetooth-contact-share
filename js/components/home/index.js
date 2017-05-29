@@ -17,8 +17,6 @@ import { openDrawer, selectTab } from '../../actions/drawer';
 import data from './data';
 import styles from './styles';
 
-const chatContactsImg = require('../../../images/chatcontacts.png');
-
 class Home extends Component {  // eslint-disable-line
 
   static propTypes = {
@@ -71,7 +69,7 @@ class Home extends Component {  // eslint-disable-line
               />
             </Item>
             <Button transparent style={styles.btnHeader} onPress={this.props.openDrawer} >
-              <Image source={chatContactsImg} style={styles.sidebarIcon} />
+              <Icon name="menu" style={{ color: '#fff' }} />
             </Button>
           </Header>
         }
@@ -85,7 +83,7 @@ class Home extends Component {  // eslint-disable-line
               <Icon name="people" style={(this.props.tabState === 'friends') ? styles.activeIcon : undefined} />
             </Button>
             <Button onPress={() => this.props.selectTab('chat')}>
-              <Icon name="chatboxes" style={(this.props.tabState === 'chat') ? styles.activeIcon : undefined} />
+              <Icon name="share" style={(this.props.tabState === 'chat') ? styles.activeIcon : undefined} />
             </Button>
           </FooterTab>
         </Footer>
