@@ -1,5 +1,5 @@
 import type { Action } from '../actions/types';
-import { ADD_USER } from '../actions/userActionCreator';
+import { ADD_USER, LOGOUT } from '../actions/userActionCreator';
 
 export type State = {
     user: object,
@@ -11,6 +11,7 @@ const defaultState = {
 };
 
 export default function (state:State = defaultState, action:Action): State {
+  console.log(action, 'action payload');
   switch (action.type) {
     case ADD_USER:
       return {
@@ -18,6 +19,11 @@ export default function (state:State = defaultState, action:Action): State {
         user: action.payload
       }
       break;
+    case LOGOUT:
+      return {
+        ...state,
+        user: null
+      }
     default:
       return state;
   }

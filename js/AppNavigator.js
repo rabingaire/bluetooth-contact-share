@@ -62,6 +62,7 @@ class AppNavigator extends Component {
         content={<SideBar navigator={this._navigator} />}
         tapToClose
         acceptPan={false}
+        onPress={() => {this._drawer.open()}}
         onClose={() => this.closeDrawer()}
         openDrawerOffset={0.2}
         panCloseMask={0.2}

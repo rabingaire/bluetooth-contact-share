@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { Image, View } from 'react-native';
 import { Container, Content, Text, Icon, List, Left, Right, Body, ListItem, Thumbnail, Item, Input, Button } from 'native-base';
 import { Actions, ActionConst } from 'react-native-router-flux';
+import { bindActionCreators } from 'redux';
 
 import { closeDrawer } from '../../actions/drawer';
 import styles from './style';
+import { logout } from '../../actions/userActionCreator';
 
 const profileImg = require('../../../images/profile.png');
 const locationImg = require('../../../images/nearby.png');
@@ -30,9 +32,11 @@ const userData = [
   },
 ];
 class SideBar extends Component {
-  static propTypes = {
-    closeDrawer: React.PropTypes.func,
+  constructor(props) {
+    super(props);
+    this.logoutUser = this.logoutUser.bind(this);
   }
+
   routeCall(data) {
     if (data === 'profile') {
       Actions.profile();
@@ -42,6 +46,18 @@ class SideBar extends Component {
       this.props.closeDrawer();
     }
   }
+
+  logoutUser() {
+    this.props.logout();
+    Actions.login({
+      type: ActionConst.RESET
+    });
+  }
+
+  componentDidMount() {
+    console.log('this is a props', this.props);
+  }
+
   render() {
     return (
       <Container>
@@ -300,7 +316,7 @@ class SideBar extends Component {
             </ListItem>
             <ListItem
               button iconLeft
-              onPress={() => { Actions.login({ type: ActionConst.RESET }); this.props.closeDrawer(); }}
+              onPress={() => { this.logoutUser(); this.props.closeDrawer(); }}
               style={styles.links}
             >
               <Icon name="power" style={{ color: '#fff' }} />
@@ -316,10 +332,12 @@ class SideBar extends Component {
 function bindAction(dispatch) {
   return {
     closeDrawer: () => dispatch(closeDrawer()),
+    logout: bindActionCreators(logout, dispatch)
   };
 }
 
 const mapStateToProps = state => ({
+  user: state.user
 });
 
 export default connect(mapStateToProps, bindAction)(SideBar);

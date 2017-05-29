@@ -40,7 +40,8 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    if (this.props.user) {
+    if (!this.props.user) {
+      alert('mm')
       Actions.home({
         firstname: this.props.user.firstName,
         lastname: this.props.user.lastName,
@@ -127,7 +128,7 @@ class Login extends Component {
   render() {
     return (
       <Container style={styles.background}>
-        {this.state.logic ?
+        {!this.state.logic ?
           <Content>
           <Image source={logo} style={Platform.OS === 'android' ? styles.aShadow : styles.iosShadow} />
           <View style={{ padding: 40 }}>
@@ -185,9 +186,6 @@ function bindAction(dispatch) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
-};
 const mapStateToProps = state => ({
   tabState: state.drawer.tabState,
   user: state.user
