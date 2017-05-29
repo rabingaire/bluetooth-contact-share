@@ -79,4 +79,15 @@ export default {
     backgroundColor: '#F8F8F8',
     marginBottom: (Platform.OS === 'ios') ? 0 : undefined,
   },
+  scannerContainer: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent:'center',
+    flexDirection: 'row',
+    marginTop: 10,
+    height: 100
+  },
+  scannerButton: {
+    backgroundColor: 'steelbluef',
+  }
 };

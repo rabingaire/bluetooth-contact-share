@@ -29,6 +29,16 @@ const userData = [
 class SideBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: [
+        {
+          thumbnail: locationImg,
+          name: 'Scan nearby device',
+          content: 'Who is near you',
+          link: 'nearbyFriends',
+        }
+    ]
+    }
     this.logoutUser = this.logoutUser.bind(this);
   }
 
@@ -40,7 +50,14 @@ class SideBar extends Component {
   }
 
   componentDidMount() {
-    console.log('this is a props', this.props);
+    const user = {
+      name: this.props.user.firstName,
+      content: 'View Profile',
+      thumbnail: this.props.user.image ? this.props.user.image : profileImg,
+      link:'nearbyFriends'
+    }
+    this.setState({user: [user, ...this.state.user]});
+    console.log(this.state.user, 'user....');
   }
 
   routeCall(data) {
@@ -58,7 +75,7 @@ class SideBar extends Component {
       <Container>
         <Content style={styles.drawerContent}>
           <List
-            dataArray={userData}
+            dataArray={this.state.user}
             renderRow={userDataRow =>
               <ListItem
                 button
@@ -130,7 +147,7 @@ function bindAction(dispatch) {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user.user
 });
 
 export default connect(mapStateToProps, bindAction)(SideBar);

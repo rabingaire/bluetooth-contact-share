@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Image, View, TouchableOpacity, Text, TextInput } from 'react-native';
+import { Image, View, TouchableOpacity, Text, TextInput, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Left, Right, Body, Content, Button, Icon, Thumbnail, Title, List } from 'native-base';
+import { Container, Header, Left, Right, Body, Content, Button, Icon, Thumbnail, Title, List, Spinner} from 'native-base';
 
 import { openDrawer } from '../../actions/drawer';
 
@@ -38,7 +38,7 @@ class Settings extends Component {  // eslint-disable-line
             </Button>
           </Left>
           <Body style={{ flex: 1.5 }}>
-            <Title style={styles.header}>Nearby Friends</Title>
+            <Title style={styles.header}>Search Device</Title>
           </Body>
           <Right>
             <Button transparent onPress={this.props.openDrawer}>
@@ -48,58 +48,40 @@ class Settings extends Component {  // eslint-disable-line
         </Header>
         <Content style={styles.content}>
 
-          <View style={styles.firstContainer}>
-            <View style={styles.searchContainer}>
-              <Icon name={'search'} style={styles.searchIcon} />
-              <TextInput
-                style={{ height: 40, borderWidth: 0, flex: 1, paddingLeft: 10, marginTop: 2, color: 'rgba(0,0,0,0.3)' }}
-                onChangeText={text => this.setState({ text })}
-                value={this.state.text}
-                placeholder="Nearby Friends"
-                underlineColorAndroid="transparent"
-                editable
-              />
-            </View>
-            <View style={styles.inviteContainer}>
-              <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                <Icon active name="people" style={{ color: primary, fontSize: 25, marginTop: 7 }} />
-                <Text style={{ color: primary, fontSize: 16, marginLeft: 10, marginTop: 10 }}>Invite</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
           <View style={styles.largeDivider}>
-            <Text>YOUR LOCATION</Text>
+            <Text>Scan nearby device</Text>
           </View>
 
-          <TouchableOpacity style={styles.nameContainer}>
-            <Thumbnail circle size={60} source={profileImg} />
-            <View style={{ marginTop: 8 }}>
-              <Text style={styles.userName}>Aditya Thakur</Text>
-              <Text style={styles.viewProfileText}>BTM 2nd Stage</Text>
-            </View>
-            <Icon active name="options" style={styles.arrowForward} />
-          </TouchableOpacity>
+          <View style={styles.scannerContainer}>
+            <Button style={styles.scannerButton}>
+                <Icon name='home' style={{color: 'white', fontSize: 20, fontWeight: '800'}}/>
+                <Text style={{color: 'white', fontSize: 20}}>Scan</Text>
+                <Spinner color="#fff"/>
+            </Button>
+          </View>
 
           <View style={styles.largeDivider}>
             <Text>NEARBY</Text>
           </View>
 
-          <List
+          <View style={{flex: 1}}>
+            <List
             dataArray={data}
             renderRow={dataRow =>
               <TouchableOpacity style={styles.nameContainer}>
-                <Thumbnail circle size={60} source={dataRow.image} />
-                <View style={{ marginTop: 8 }}>
-                  <Text style={styles.userName}>{dataRow.name}</Text>
-                  <Text style={styles.viewProfileText}>{dataRow.note}</Text>
-                </View>
-                <Icon active name="hand" style={styles.arrowForward} />
+              <Thumbnail circle size={60} source={dataRow.image} />
+              <View style={{ marginTop: 8 }}>
+              <Text style={styles.userName}>{dataRow.name}</Text>
+              <Text style={styles.viewProfileText}>{dataRow.note}</Text>
+              </View>
+              <Icon active name="hand" style={styles.arrowForward} />
               </TouchableOpacity>
-              }
-          />
+            }
+            />
+          </View>
 
-          <View style={styles.smallDivider}>
+
+          {/*<View style={styles.smallDivider}>
             <Text style={{ alignSelf: 'center', color: 'rgba(0,0,0,0.3)' }}>See More</Text>
           </View>
 
@@ -127,7 +109,7 @@ class Settings extends Component {  // eslint-disable-line
                 <Icon active name="hand" style={styles.arrowForward} />
               </TouchableOpacity>
               }
-          />
+          />*/}
 
         </Content>
       </Container>
