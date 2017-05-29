@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Left, Right, Body, Button, Icon, Thumbnail, Title, List, ListItem, Footer } from 'native-base';
+import { Container, Header, Content, Left, Right, Body, Button, Icon, Title, List, ListItem, Footer } from 'native-base';
 
 
 import { openDrawer, selectTab } from '../../actions/drawer';
@@ -29,12 +29,12 @@ class Friends extends Component {  // eslint-disable-line
       <Container>
         <Header>
           <Left>
-            <Button transparent onPress={() => this.props.selectTab('homeContent') }>
+            <Button transparent onPress={() => this.props.selectTab('homeContent')}>
               <Icon style={styles.backBtn} name="arrow-back" />
             </Button>
           </Left>
           <Body style={{ flex: 1.5 }}>
-            <Title style={styles.header}>Friend Requests</Title>
+            <Title style={styles.header}>Profiles</Title>
           </Body>
           <Right>
             <Button transparent>
@@ -44,33 +44,17 @@ class Friends extends Component {  // eslint-disable-line
         </Header>
 
         <Content style={styles.content}>
-          <Text style={styles.requestHead}>FRIEND REQUESTS</Text>
           <View style={styles.requestContainer}>
-            <Text style={styles.whiteRequest}>No Friend Requests</Text>
+            <Text style={styles.whiteRequest}>Profiles</Text>
           </View>
-          <Text style={styles.requestHead}>PEOPLE YOU MAY KNOW</Text>
           <View style={styles.requestContainer}>
             <List
               dataArray={data}
               renderRow={dataRow =>
                 <ListItem>
                   <View style={styles.requestContainerInner}>
-                    <Thumbnail square style={{ height: 66, width: 66 }} size={75} source={dataRow.thumbnail} />
                     <View>
                       <Text style={styles.name}>{dataRow.name}</Text>
-                      <Text style={styles.noOfMutualFriends}>{dataRow.friendsCount}</Text>
-                      <View style={styles.actionButtonsBlock}>
-                        <Button block style={styles.friendBtn1}>
-                          <Text style={{ color: '#fff' }}>
-                            Add Friend
-                          </Text>
-                        </Button>
-                        <Button block bordered style={styles.friendBtn}>
-                          <Text style={{ color: '#2874F0' }}>
-                            Remove
-                          </Text>
-                        </Button>
-                      </View>
                     </View>
                   </View>
                 </ListItem>

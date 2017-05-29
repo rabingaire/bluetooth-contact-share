@@ -47,7 +47,7 @@ class Login extends Component {
         email: this.props.user.email,
       })
     }
-    this.setState({logic: false});
+    this.setState({ logic: false });
   }
 
   handleOnPress() {
@@ -129,50 +129,50 @@ class Login extends Component {
       <Container style={styles.background}>
         {this.state.logic ?
           <Content>
-          <Image source={logo} style={Platform.OS === 'android' ? styles.aShadow : styles.iosShadow} />
-          <View style={{ padding: 40 }}>
-          <Item borderType="underline" style={styles.inputGrp}>
-          <Input
-          placeholder="Email"
-          placeholderTextColor={'#fff'}
-          autoCapitalize="none"
-          onChangeText={email => this.setState({ email })}
-          style={styles.input}
-          />
-          </Item>
-          <Item borderType="underline" style={styles.inputGrp}>
-          <Input
-          placeholder="Password"
-          placeholderTextColor={'#fff'}
-          secureTextEntry
-          autoCapitalize="none"
-          onChangeText={password => this.setState({ password })}
-          style={styles.input}
-          />
-          </Item>
-          {this.state.error &&
-            <View>
-            <Text style={styles.errorTypeStyle}>
-            {this.state.error}
-            </Text>
+            <Image source={logo} style={Platform.OS === 'android' ? styles.aShadow : styles.iosShadow} />
+            <View style={{ padding: 40 }}>
+              <Item borderType="underline" style={styles.inputGrp}>
+                <Input
+                  placeholder="Email"
+                  placeholderTextColor={'#fff'}
+                  autoCapitalize="none"
+                  onChangeText={email => this.setState({ email })}
+                  style={styles.input}
+                />
+              </Item>
+              <Item borderType="underline" style={styles.inputGrp}>
+                <Input
+                  placeholder="Password"
+                  placeholderTextColor={'#fff'}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  onChangeText={password => this.setState({ password })}
+                  style={styles.input}
+                />
+              </Item>
+              {this.state.error &&
+                <View>
+                  <Text style={styles.errorTypeStyle}>
+                    {this.state.error}
+                  </Text>
+                </View>
+              }
+              { this.renderButton() }
+              <Button transparent style={{ alignSelf: 'center' }}>
+                <Text style={styles.forgotPassword}>
+                  Forgot Password?
+                </Text>
+              </Button>
+              <Button
+                block bordered
+                style={styles.createBtn}
+                onPress={() => Actions.signUp()}
+              >
+                <Text style={styles.createBtnTxt}>CREATE NEW ACCOUNT</Text>
+              </Button>
             </View>
-          }
-          { this.renderButton() }
-          <Button transparent style={{ alignSelf: 'center' }}>
-          <Text style={styles.forgotPassword}>
-          Forgot Password?
-          </Text>
-          </Button>
-          <Button
-          block bordered
-          style={styles.createBtn}
-          onPress={() => Actions.signUp()}
-          >
-          <Text style={styles.createBtnTxt}>CREATE NEW ACCOUNT</Text>
-          </Button>
-          </View>
           </Content>
-          : <ActivityIndicator></ActivityIndicator>
+          : <ActivityIndicator />
         }
       </Container>
     );
@@ -187,7 +187,8 @@ function bindAction(dispatch) {
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) }
-};
+}
+
 const mapStateToProps = state => ({
   tabState: state.drawer.tabState,
   user: state.user

@@ -79,19 +79,13 @@ class Home extends Component {  // eslint-disable-line
         <Footer style={{ position: 'absolute', bottom: 0 }}>
           <FooterTab>
             <Button onPress={() => this.props.selectTab('homeContent')} >
-              <Icon name="calendar" style={(this.props.tabState === 'homeContent') ? styles.activeIcon : undefined} />
+              <Icon name="book" style={(this.props.tabState === 'homeContent') ? styles.activeIcon : undefined} />
             </Button>
             <Button onPress={() => this.props.selectTab('friends')}>
               <Icon name="people" style={(this.props.tabState === 'friends') ? styles.activeIcon : undefined} />
             </Button>
             <Button onPress={() => this.props.selectTab('chat')}>
               <Icon name="chatboxes" style={(this.props.tabState === 'chat') ? styles.activeIcon : undefined} />
-            </Button>
-            <Button onPress={() => this.props.selectTab('notifications')}>
-              <Icon name="notifications" style={(this.props.tabState === 'notifications') ? styles.activeIcon : undefined} />
-            </Button>
-            <Button onPress={() => this.props.selectTab('settings')}>
-              <Icon name="settings" style={(this.props.tabState === 'settings') ? styles.activeIcon : undefined} />
             </Button>
           </FooterTab>
         </Footer>
