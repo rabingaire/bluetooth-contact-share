@@ -40,7 +40,7 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.user) {
+    if (this.props.user) {
       Actions.home({
         firstname: this.props.user.firstName,
         lastname: this.props.user.lastName,
@@ -187,7 +187,7 @@ function bindAction(dispatch) {
 
 const mapStateToProps = state => ({
   tabState: state.drawer.tabState,
-  user: state.user
+  user: state.user.user
 });
 
 export default connect(mapStateToProps, bindAction)(Login);
