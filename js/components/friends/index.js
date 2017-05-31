@@ -31,11 +31,13 @@ class Friends extends Component {  // eslint-disable-line
 
   componentWillMount() {
     const user = this.props.user;
+    console.log(user);
     this.setState({
       loading: true,
       tguid: user.tguid,
       userid: user.userId,
     });
+    console.log(this.state.userid);
     this.callProfileApi();
   }
 
@@ -46,6 +48,7 @@ class Friends extends Component {  // eslint-disable-line
     HTTP(uri, 'GET')
     .then(response => response.json())
     .then((responseData) => {
+      console.log(responseData);
       if (responseData.message === null) {
         this.setState({ loading: false, profilesInfo: responseData });
       } else {
