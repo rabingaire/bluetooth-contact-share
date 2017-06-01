@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Content, Left, Right, Body, Button, Icon, Title, List, ListItem, Spinner } from 'native-base';
 import { openDrawer, selectTab } from '../../actions/drawer';
-import { HTTP } from '../helper/common';
+import { HTTP, setItem, getItem } from '../helper/common';
 import styles from './styles';
 
 
@@ -40,6 +40,7 @@ class Friends extends Component {
     .then(response => response.json())
     .then((responseData) => {
       if (responseData.constructor === Array) {
+        setItem('reachedProfile', responseData.length);
         this.setState({ loading: false, profilesInfo: responseData });
       } else {
         this.setState({ loading: false, message: 'No profile found' });

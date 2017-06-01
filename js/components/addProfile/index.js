@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Body, Button, Icon, Title, Item, Input, Content, View, Text, Spinner } from 'native-base';
-import { HTTP } from '../helper/common';
+import { HTTP, getItem } from '../helper/common';
+import { addUser } from '../../actions/userActionCreator';
 import { openDrawer, selectTab } from '../../actions/drawer';
 import styles from './styles';
 
@@ -13,9 +14,9 @@ class AddProfile extends Component {
     super(props);
     this.state = {
       tab: 'addProfile',
-      profileId: 0,
+      profileId: null,
       userId: null,
-      tguid: null,
+      tguid: '',
       profileName: '',
       firstName: '',
       lastName: '',
@@ -34,7 +35,7 @@ class AddProfile extends Component {
       twitter: '',
       storeOnServer: true,
       privacy: 1,
-      lastUpdated: null,
+      lastUpdated: '2017-04-23T04:45:14',
       loading: false,
       error: ''
     };
@@ -45,13 +46,18 @@ class AddProfile extends Component {
     this.renderButton = this.renderButton.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const user = this.props.user;
+    getItem('reachedProfile')
+      .then((response) => {
+        const profileId = response + 1;
+        this.setState({ profileId });
+      });
     this.setState({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      userId: user.userId,
-      tguid: user.tguid,
+      firstName: user.user.firstName,
+      lastName: user.user.lastName,
+      userId: user.user.userId,
+      tguid: user.user.tguid,
     });
   }
 
@@ -79,7 +85,7 @@ class AddProfile extends Component {
             privacy,
             lastUpdated,
     } = this.state;
-    const uri = `api/profiles?userId=${userId}&tguid=${tguid}`;
+    const uri = `api/profiles?userId=${userId}&tguid=${tguid}&profileId=${profileId}`;
 
     const payload = {
       profileId,
@@ -109,6 +115,7 @@ class AddProfile extends Component {
     HTTP(uri, 'POST', payload)
     .then(response => response.json())
     .then((responseData) => {
+      console.log(responseData);
       if (responseData.message === null) {
         this.setState({ loading: false });
         this.props.selectTab('friends');
@@ -124,6 +131,8 @@ class AddProfile extends Component {
       this.setState({ error: 'Profile name, company name and title on company cannot be empty!' });
     } else if (!this.isEmailValid()) {
       this.setState({ error: 'Email structure not valid' });
+    } else if (this.state.profileId === 11) {
+      this.setState({ error: 'There are already 10 profiles no more can be added !' })
     } else {
       this.setState({ loading: true, error: '' });
       this.callAddContactsApi();

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Platform, ActivityIndicator } from 'react-native';
+import { Image, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { Container, Content, Text, Item, Input, Button, View, Spinner } from 'native-base';
@@ -7,8 +7,8 @@ import { bindActionCreators } from 'redux';
 
 import styles from './styles';
 import { selectTab } from '../../actions/drawer';
-import { addUser }  from '../../actions/userActionCreator';
-import { HTTP, setItem } from '../helper/common';
+import { addUser } from '../../actions/userActionCreator';
+import { HTTP, setItem, getItem } from '../helper/common';
 
 const logo = require('../../../images/logo.png');
 
@@ -23,7 +23,7 @@ class Login extends Component {
       tab: 'homeContent',
       error: null,
       loading: false,
-      logic: true
+      logic: true,
     };
     this.constructor.childContextTypes = {
       theme: React.PropTypes.object,
@@ -40,14 +40,19 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    if (this.props.user) {
-      Actions.home({
-        firstname: this.props.user.firstName,
-        lastname: this.props.user.lastName,
-        email: this.props.user.email,
+    this.setState({logic: true})
+    getItem('user')
+      .then((user) => {
+        this.props.dispatch(addUser(user));
+        Actions.home({
+          firstname: this.props.user.firstName,
+          lastname: this.props.user.lastName,
+          email: this.props.user.email,
+        });
       })
-    }
-    this.setState({ logic: false });
+      .finally(() =>{
+        this.setState({logic: false});
+      });
   }
 
   handleOnPress() {
@@ -79,6 +84,7 @@ class Login extends Component {
     .then(response => response.json())
     .then((responseData) => {
       if (responseData.isActive === true) {
+        setItem('user', responseData);
         this.props.dispatch(addUser(responseData));
         this.signUpSucessfull(responseData);
       } else {
@@ -172,7 +178,7 @@ class Login extends Component {
               </Button>
             </View>
           </Content>
-          : <ActivityIndicator />
+          : <Spinner color="#fff" />
         }
       </Container>
     );
