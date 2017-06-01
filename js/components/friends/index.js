@@ -14,7 +14,7 @@ class Friends extends Component {
     super(props);
     this.state = {
       profileId: 0,
-      loading: false,
+      loading: true,
       message: null,
       profilesInfo: [],
       tab: 'friends',
@@ -23,11 +23,8 @@ class Friends extends Component {
     this.callProfileApi = this.callProfileApi.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const user = this.props.user;
-    this.setState({
-      loading: true,
-    });
     const userId = user.user.userId;
     const tguid = user.user.tguid;
     this.callProfileApi(userId, tguid);
@@ -84,9 +81,6 @@ class Friends extends Component {
         { this.state.loading ?
           <Spinner color="#3B5998" /> :
           <Content style={styles.content}>
-            <View style={styles.requestContainer}>
-              <Text style={styles.whiteRequest}>Profiles</Text>
-            </View>
             <View style={styles.requestContainer}>
               { this.state.message === null ?
                 <List>
