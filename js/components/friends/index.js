@@ -8,18 +8,11 @@ import { HTTP } from '../helper/common';
 import styles from './styles';
 
 
-class Friends extends Component {  // eslint-disable-line
-  static propTypes = {
-    tabState: React.PropTypes.string,
-    selectTab: React.PropTypes.func,
-    openDrawer: React.PropTypes.func,
-  }
+class Friends extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userid: null,
       profileId: 0,
-      tguid: null,
       loading: false,
       message: null,
       profilesInfo: [],
@@ -31,25 +24,22 @@ class Friends extends Component {  // eslint-disable-line
 
   componentWillMount() {
     const user = this.props.user;
-    console.log(user);
     this.setState({
       loading: true,
-      tguid: user.tguid,
-      userid: user.userId,
     });
-    console.log(this.state.userid);
-    this.callProfileApi();
+    const userId = user.user.userId;
+    const tguid = user.user.tguid;
+    this.callProfileApi(userId, tguid);
   }
 
-  callProfileApi() {
-    const { userid, profileId, tguid } = this.state;
-    const uri = `api/profiles?userid=${userid}&profileId=${profileId}&tguid=${tguid}`;
+  callProfileApi(userId, tguid) {
+    const { profileId } = this.state;
+    const uri = `api/profiles?userid=${userId}&profileId=${profileId}&tguid=${tguid}`;
 
     HTTP(uri, 'GET')
     .then(response => response.json())
     .then((responseData) => {
-      console.log(responseData);
-      if (responseData.message === null) {
+      if (responseData.constructor === Array) {
         this.setState({ loading: false, profilesInfo: responseData });
       } else {
         this.setState({ loading: false, message: 'No profile found' });
@@ -60,10 +50,10 @@ class Friends extends Component {  // eslint-disable-line
 
   render() {
     const profiles = this.state.profilesInfo.map(profile =>
-      <ListItem>
-        <View style={styles.requestContainerInner}>
-          <View>
-            <Text style={styles.name}>{profile.firstname} {profile.lastName}</Text>
+      <ListItem key={profile.profileId}>
+        <View style={styles.requestContainerInner} key={profile.profileId}>
+          <View key={profile.profileId}>
+            <Text style={styles.name} key={profile.profileId}>{profile.firstName} {profile.lastName}</Text>
           </View>
         </View>
       </ListItem>
