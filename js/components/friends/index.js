@@ -21,6 +21,7 @@ class Friends extends Component {
     };
 
     this.callProfileApi = this.callProfileApi.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +48,11 @@ class Friends extends Component {
     .done();
   }
 
+  handleEdit(profile) {
+    setItem('editProfileReqData', profile);
+    // this.props.selectTab('addProfile');
+  }
+
   render() {
     const profiles = this.state.profilesInfo.map(profile =>
       <ListItem key={profile.profileId}>
@@ -54,7 +60,7 @@ class Friends extends Component {
           <Text style={styles.name} key={profile.profileId}>{profile.firstName} {profile.lastName}</Text>
         </Left>
         <Right>
-          <Button style={{ backgroundColor: '#fff' }}>
+          <Button onPress={() => this.handleEdit(profile)} style={{ backgroundColor: '#fff' }}>
             <Icon name="pencil" size={20} />
           </Button>
         </Right>

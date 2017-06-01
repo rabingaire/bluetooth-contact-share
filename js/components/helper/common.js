@@ -31,3 +31,8 @@ export async function getItem(key) {
   const response = JSON.parse(data);
   return response;
 }
+
+export async function removeItem(key) {
+  const response = await AsyncStorage.removeItem(key);
+  return response;
+}

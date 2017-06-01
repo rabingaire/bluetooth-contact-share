@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 // import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Body, Button, Title, Item, Input, Content, View, Text, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { HTTP, getItem } from '../helper/common';
+import { HTTP, getItem, removeItem } from '../helper/common';
 import { addUser } from '../../actions/userActionCreator';
 import { openDrawer, selectTab } from '../../actions/drawer';
 import styles from './styles';
@@ -38,7 +38,7 @@ class AddProfile extends Component {
       privacy: 1,
       lastUpdated: '2017-04-23T04:45:14',
       loading: false,
-      error: ''
+      error: '',
     };
     this.callAddContactsApi = this.callAddContactsApi.bind(this);
     this.handleOnPress = this.handleOnPress.bind(this);
