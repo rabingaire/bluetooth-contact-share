@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 // import { Actions } from 'react-native-router-flux';
-import { Container, Header, Left, Body, Button, Icon, Title, Item, Input, Content, View, Text, Spinner } from 'native-base';
+import { Container, Header, Left, Body, Button, Title, Item, Input, Content, View, Text, Spinner } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { HTTP, getItem } from '../helper/common';
 import { addUser } from '../../actions/userActionCreator';
 import { openDrawer, selectTab } from '../../actions/drawer';
@@ -177,7 +178,7 @@ class AddProfile extends Component {
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.selectTab('friends')}>
-              <Icon style={styles.backBtn} name="arrow-back" />
+              <Icon style={styles.backBtn} name="chevron-left" size={20} />
             </Button>
           </Left>
           <Body style={{ flex: 1.5 }}>

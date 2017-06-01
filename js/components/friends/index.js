@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Left, Right, Body, Button, Icon, Title, List, ListItem, Spinner } from 'native-base';
+import { Container, Header, Content, Left, Right, Body, Button, Title, List, ListItem, Spinner } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { openDrawer, selectTab } from '../../actions/drawer';
 import { HTTP, setItem, getItem } from '../helper/common';
 import styles from './styles';
@@ -52,11 +53,14 @@ class Friends extends Component {
   render() {
     const profiles = this.state.profilesInfo.map(profile =>
       <ListItem key={profile.profileId}>
-        <View style={styles.requestContainerInner} key={profile.profileId}>
-          <View key={profile.profileId}>
-            <Text style={styles.name} key={profile.profileId}>{profile.firstName} {profile.lastName}</Text>
-          </View>
-        </View>
+        <Left>
+          <Text style={styles.name} key={profile.profileId}>{profile.firstName} {profile.lastName}</Text>
+        </Left>
+        <Right>
+          <Button style={{ backgroundColor: '#fff' }}>
+            <Icon name="pencil" size={20} />
+          </Button>
+        </Right>
       </ListItem>
     );
     return (
@@ -64,7 +68,7 @@ class Friends extends Component {
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.selectTab('homeContent')}>
-              <Icon style={styles.backBtn} name="arrow-back" />
+              <Icon style={styles.backBtn} name="chevron-left" size={20} />
             </Button>
           </Left>
           <Body style={{ flex: 1.5 }}>
@@ -72,7 +76,7 @@ class Friends extends Component {
           </Body>
           <Right>
             <Button transparent onPress={() => this.props.selectTab('addProfile')}>
-              <Icon style={styles.addBtn} name="add" />
+              <Icon style={styles.addBtn} name="plus" size={20}/>
             </Button>
           </Right>
         </Header>
